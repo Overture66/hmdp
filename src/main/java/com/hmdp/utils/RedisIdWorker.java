@@ -16,6 +16,7 @@ public class RedisIdWorker {
     private StringRedisTemplate stringRedisTemplate;
 
     public RedisIdWorker(StringRedisTemplate stringRedisTemplate) {
+
         this.stringRedisTemplate = stringRedisTemplate;
     }
 
