@@ -63,9 +63,10 @@ public class CacheClient {
 
     private static final ExecutorService CACHE_REBUILD_EXECUTOR = Executors.newFixedThreadPool(10);
     public <R,ID> R queryWithPLogicalExpire(String keyPrefix, ID id, Class<R> type, Function<ID,R> dbFallBack,Long time,TimeUnit unit){
-        String key = CACHE_SHOP_KEY + id;
+        String key = keyPrefix + id;
+
         String json = stringRedisTemplate.opsForValue().get(key);
-        if (StrUtil.isBlank(json)) {
+        if (StrUtil.isEmpty(json)) {
             return null;
         }
         RedisData redisData = JSONUtil.toBean(json, RedisData.class);
