@@ -64,6 +64,21 @@ public class HmDianPingApplicationTests {
     }
 
     @Test
+    void testHyberLogLog() {
+        String[] values=new String[1000];
+        int j;
+        for (int i = 0; i < 1000000; i++) {
+            j=i%1000;
+            values[j]="user_"+i;
+            if (j==999){
+                stringRedisTemplate.opsForHyperLogLog().add("hl2",values);
+            }
+        }
+        Long count = stringRedisTemplate.opsForHyperLogLog().size("hl2");
+        System.out.println(count);
+    }
+
+    @Test
     void loadShopData() {
         List<Shop> list = shopService.list();
         Map<Long,List<Shop>> map=list.stream().collect(Collectors.groupingBy(Shop::getTypeId));
@@ -81,5 +96,6 @@ public class HmDianPingApplicationTests {
             }
                 stringRedisTemplate.opsForGeo().add(key,locations);
         }
+        
     }
 }
